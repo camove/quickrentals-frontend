@@ -1,0 +1,502 @@
+/* Container și titlu */
+.container {
+  min-height: 82vh;
+  padding: 2rem;
+  background: #f5f7fa;
+}
+
+.title {
+  text-align: center;
+  font-size: 3.5rem;
+  letter-spacing: 1.5px;
+  color: var(--violet-eggplant);
+  margin-bottom: 3rem;
+  font-weight: 800;
+}
+
+/* No favorites state */
+.noFavourites {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--violet-eggplant);
+}
+
+.emptyState h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.emptyState p {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.exploreButton {
+  background: var(--cornflower-blue);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.exploreButton:hover {
+  background: var(--violet-eggplant);
+  transform: translateY(-2px);
+}
+
+/* Grid layout pentru carduri */
+.flatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Card styling */
+.flatCard {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.flatCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Image container */
+.flatImage {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.flatImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.flatCard:hover .flatImage img {
+  transform: scale(1.05);
+}
+
+/* Favorite button */
+.favoriteButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.favoriteButton:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.favoriteButton.active {
+  background: #ffe0e0;
+}
+
+/* AC Badge */
+.acBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Card content */
+.flatContent {
+  padding: 1.5rem;
+}
+
+.flatCity {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--violet-eggplant);
+  margin-bottom: 1rem;
+}
+
+.flatAddress {
+  color: #6c757d;
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+}
+
+.flatDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.flatArea {
+  font-size: 1.1rem;
+  color: #6c757d;
+}
+
+.flatPrice {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cornflower-blue);
+}
+
+.flatYear {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Card actions */
+.cardActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.viewDetailsButton {
+  background: var(--cornflower-blue);
+  color: white;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.viewDetailsButton:hover {
+  background: var(--violet-eggplant);
+}
+
+.removeButton {
+  background: transparent;
+  color: #ef4444;
+  border: 2px solid #ef4444;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.removeButton:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Loading */
+.loaderContainer {
+  min-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--purple-heart-6);
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.loadingText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--violet-eggplant);
+  margin-top: 1rem;
+}
+
+/* Loading state for grid */
+.flatsGrid.loading {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Smooth transition for grid */
+.flatsGrid {
+  transition: opacity 0.2s ease;
+}
+
+/* Modal styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 1rem;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modalCloseButton:hover {
+  background: white;
+  transform: rotate(90deg);
+}
+
+/* Carousel */
+.imageCarousel {
+  position: relative;
+  height: 400px;
+  background: #f0f0f0;
+}
+
+.modalImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.carouselButton:first-of-type {
+  left: 1rem;
+}
+
+.carouselButton:last-of-type {
+  right: 1rem;
+}
+
+.carouselButton:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.imageDots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 5;
+}
+
+.dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.activeDot {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* Detalii Modal */
+.modalDetails {
+  padding: 2rem;
+}
+
+.modalDetails h2 {
+  font-size: 2rem;
+  color: var(--violet-eggplant);
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detailItem {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+.detailItem strong {
+  display: block;
+  color: var(--violet-eggplant);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailItem p {
+  color: #495057;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.removeFromFavoritesButton {
+  flex: 1;
+  padding: 1rem;
+  background: transparent;
+  color: var(--violet-eggplant);
+  border: 2px solid var(--violet-eggplant);
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.removeFromFavoritesButton:hover {
+  background: var(--violet-eggplant);
+  color: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .flatsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .modalContent {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  .imageCarousel {
+    height: 250px;
+  }
+  
+  .modalActions {
+    flex-direction: column;
+  }
+
+  .cardActions {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .cardActions button {
+    flex: 1;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flatImage {
+    height: 200px;
+  }
+  
+  .modalDetails {
+    padding: 1.5rem;
+  }
+  
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

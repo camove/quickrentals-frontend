@@ -1,0 +1,10 @@
+/* .outlet {
+  margin-top: calc(var(--navBar-height));
+  margin-bottom: calc(var(--footer-height));
+  padding: 8rem 0 0 0;
+
+} */
+
+/* .outlet {
+  margin-top: var(--actual-navbar-height);
+} */

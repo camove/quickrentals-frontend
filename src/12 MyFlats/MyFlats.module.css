@@ -1,0 +1,381 @@
+/* Container principal */
+.container {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 2rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--violet-eggplant);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Add Button Container */
+.addButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.addButton {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--violet-eggplant), var(--cornflower-blue));
+  color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 21, 75, 0.3);
+}
+
+.addButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(74, 21, 75, 0.4);
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.emptyIcon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+}
+
+.emptyTitle {
+  font-size: 2.5rem;
+  color: var(--violet-eggplant);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.emptyMessage {
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.emptyButton {
+  display: inline-block;
+  background: var(--cornflower-blue);
+  color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.emptyButton:hover {
+  background: var(--violet-eggplant);
+  transform: translateY(-2px);
+}
+
+/* Flats Grid */
+.flatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* 🎯 SAME as HomePage */
+  gap: 2rem;
+  max-width: 1400px; /* prevents stretching */
+  margin: 0 auto; /* centers the grid */
+}
+
+/* Loading state for grid */
+.flatsGrid.loading {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Smooth transition for grid */
+.flatsGrid {
+  transition: opacity 0.2s ease;
+}
+
+/* Flat Card */
+.flatCard {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.flatCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Container */
+.imageContainer {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.flatImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.flatCard:hover .flatImage {
+  transform: scale(1.05);
+}
+
+.acBadge {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Card Content */
+.cardContent {
+  padding: 1.5rem;
+}
+
+.locationInfo {
+  margin-bottom: 1rem;
+}
+
+.cityName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--violet-eggplant);
+  margin: 0 0 0.3rem 0;
+}
+
+.address {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.propertyDetails {
+  margin-bottom: 1.5rem;
+}
+
+.priceArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--cornflower-blue);
+}
+
+.area {
+  font-size: 1rem;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+}
+
+.availableDate {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.viewButton {
+  display: block;
+  background: var(--cornflower-blue);
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.viewButton:hover {
+  background: var(--violet-eggplant);
+}
+
+.bottomButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.deleteButton,
+.editButton {
+  padding: 0.7rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+}
+
+.deleteButton {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.deleteButton:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.editButton {
+  background: #f0f9ff;
+  color: var(--cornflower-blue);
+  border: 1px solid #bae6fd;
+}
+
+.editButton:hover {
+  background: var(--cornflower-blue);
+  color: white;
+}
+
+/* Loading State */
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--violet-eggplant);
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.loadingText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--violet-eggplant);
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .flatsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .flatsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .modalContent {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .modalButtons {
+    flex-direction: column;
+  }
+
+  .confirmButton,
+  .cancelButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .flatsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .addButton {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .emptyTitle {
+    font-size: 2rem;
+  }
+
+  .emptyMessage {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,403 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  /* padding-top: var(--navBar-height); */
+}
+
+/* Hero Section */
+.heroSection {
+  background: linear-gradient(135deg, var(--violet-eggplant), var(--cornflower-blue));
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 1.4rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.primaryButton {
+  background: white;
+  color: var(--violet-eggplant);
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: #f8f9fa;
+}
+
+.secondaryButton {
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background: white;
+  color: var(--violet-eggplant);
+  transform: translateY(-2px);
+}
+
+/* Properties Section */
+.propertiesSection {
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  color: var(--violet-eggplant);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Loading and Error States */
+.loadingContainer {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--cornflower-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.errorMessage {
+  color: #dc3545;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.retryButton {
+  background: var(--cornflower-blue);
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.retryButton:hover {
+  background: var(--violet-eggplant);
+  transform: translateY(-1px);
+}
+
+/* Properties Grid */
+.propertiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.propertyCard {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.propertyCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.imageContainer {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.propertyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  transition: transform 0.3s ease;
+}
+
+.noImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  color: #6c757d;
+}
+
+.noImagePlaceholder span {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.noImagePlaceholder p {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.propertyCard:hover .propertyImage {
+  transform: scale(1.05);
+}
+
+.priceTag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--violet-eggplant);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.propertyInfo {
+  padding: 1.5rem;
+}
+
+.propertyTitle {
+  font-size: 1.4rem;
+  color: var(--violet-eggplant);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.propertyLocation {
+  color: #6c757d;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.propertyDetails {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.propertyDetail {
+  color: #6c757d;
+  font-size: 0.95rem;
+  background: #f8f9fa;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+}
+
+.viewDetailsButton {
+  width: 100%;
+  background: linear-gradient(135deg, var(--violet-eggplant), var(--cornflower-blue));
+  color: white;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.viewDetailsButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* No Properties */
+.noPropertiesContainer {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.noPropertiesMessage {
+  font-size: 1.3rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+/* CTA Section */
+.ctaSection {
+  background: linear-gradient(135deg, var(--cornflower-blue), var(--violet-eggplant));
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.ctaSubtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+  
+  .heroButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .propertiesGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .ctaTitle {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroSection {
+    padding: 4rem 1rem;
+  }
+  
+  .propertiesSection {
+    padding: 3rem 1rem;
+  }
+  
+  .ctaSection {
+    padding: 3rem 1rem;
+  }
+  
+  .propertyCard {
+    margin: 0 1rem;
+  }
+}
+
+.resultsInfo {
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+}
+
+.resultsCount {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--violet-eggplant);
+  background: rgba(135, 84, 165, 0.1);
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  border: 1px solid rgba(135, 84, 165, 0.2);
+  display: inline-block;
+}
+

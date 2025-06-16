@@ -1,0 +1,170 @@
+/* UserFormFields.module.css - Stilul exact ca Login.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0; /* Îndepărtat padding-ul pentru a se potrivi cu Register */
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 100%; /* Schimbat din 50rem pentru a se potrivi cu Register */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Input Cell - EXACT ca în Login */
+.inputCell {
+  width: 100%;
+  height: 4rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+/* Loading text pentru email check */
+.loadingText {
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  margin-left: 0.5rem;
+  font-style: italic;
+}
+
+/* Input Styling - EXACT ca în Login */
+.inputCell input {
+  font-size: 1.2rem;
+  color: var(--violet-eggplant);
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border-radius: 12px;
+  padding: 14px 60px 14px 20px;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+
+  /* Bordura gradient - exact ca în Login */
+  border: 2px solid #667eea;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #667eea, #764ba2) border-box;
+}
+
+.inputCell input:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.inputCell input:hover {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.inputCell input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.inputCell input:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Error Messages - îmbunătățit styling */
+.inputCell p {
+  color: #ef4444;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+/* Error text styling */
+.errorText {
+  color: #ef4444;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+/* Input disabled state pentru email check */
+.inputCell input:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Icons - EXACT ca în Login */
+.inputIcons {
+  width: 2.2rem;
+  height: 2.2rem;
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.inputIcons img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  /* Filtrul pentru gri - exact ca în Login */
+  filter: invert(69%) sepia(7%) saturate(453%) hue-rotate(179deg) brightness(95%) contrast(87%);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.inputCell:focus-within .inputIcons img {
+  opacity: 1;
+}
+
+/* Responsive Design - EXACT ca în Login */
+@media (max-width: 640px) {
+  .container {
+    padding: 0;
+  }
+
+  .formContainer {
+    max-width: 100%;
+  }
+
+  .inputCell {
+    height: 3.5rem;
+    margin: 0.8rem 0;
+  }
+
+  .inputCell input {
+    font-size: 1.1rem;
+    padding: 12px 50px 12px 16px;
+  }
+
+  .inputIcons {
+    width: 1.8rem;
+    height: 1.8rem;
+    right: 1rem;
+  }
+
+  .inputCell p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputCell {
+    height: 3.2rem;
+  }
+
+  .inputCell input {
+    font-size: 1rem;
+    padding: 10px 45px 10px 14px;
+  }
+
+  .inputCell p {
+    font-size: 0.75rem;
+  }
+}

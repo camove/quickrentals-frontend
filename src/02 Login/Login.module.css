@@ -1,0 +1,293 @@
+.container {
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: linear-gradient(
+    135deg,
+    var(--violet-eggplant),
+    var(--cornflower-blue)
+  );
+  padding: 20px;
+  position: relative;
+}
+
+.formContainer {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  margin-top: 4rem;
+  z-index: 2;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+/* Input Fields */
+.inputCell {
+  width: 100%;
+  height: 4rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.inputCell input {
+  font-size: 1.2rem;
+  color: var(--violet-eggplant);
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border-radius: 12px;
+  padding: 14px 60px 14px 20px;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  border: 2px solid #667eea;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(135deg, #667eea, #764ba2) border-box;
+}
+
+.inputCell input:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.inputCell input:hover {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.inputCell input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.inputCell input:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.inputIcons {
+  width: 2.2rem;
+  height: 2.2rem;
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.inputIcons img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  filter: invert(69%) sepia(7%) saturate(453%) hue-rotate(179deg)
+    brightness(95%) contrast(87%);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.inputCell:focus-within .inputIcons img {
+  opacity: 1;
+}
+
+/* Login Button */
+.loginButton {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  margin-top: 10px;
+}
+
+.loginButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.loginButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.loginButton:disabled {
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.registerDiv {
+  text-align: center;
+  color: white;
+  padding: 2rem 0;
+  margin-top: 2rem;
+  z-index: 1;
+}
+
+.registerDiv h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.3;
+}
+
+.registerDiv p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.registerButton {
+  background: white;
+  color: var(--violet-eggplant);
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 12px 30px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-transform: none;
+}
+
+.registerButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: #f8f9fa;
+}
+
+.registerButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Darkening effect for background */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .container {
+    padding: 10px;
+  }
+
+  .formContainer {
+    padding: 30px 20px;
+    margin: 10px;
+    max-width: 100%;
+  }
+
+  .formTitle {
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+
+  .inputCell {
+    height: 3.5rem;
+    margin: 0.8rem 0;
+  }
+
+  .inputCell input {
+    font-size: 1.1rem;
+    padding: 12px 50px 12px 16px;
+  }
+
+  .inputIcons {
+    width: 1.8rem;
+    height: 1.8rem;
+    right: 1rem;
+  }
+
+  .loginButton {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+
+  .registerDiv {
+    bottom: 20px;
+    padding: 0 20px;
+  }
+
+  .registerDiv h2 {
+    font-size: 1.5rem;
+  }
+
+  .registerDiv p {
+    font-size: 1.1rem;
+  }
+
+  .registerButton {
+    font-size: 1.1rem;
+    padding: 10px 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formContainer {
+    padding: 25px 15px;
+  }
+
+  .formTitle {
+    font-size: 1.8rem;
+  }
+
+  .inputCell {
+    height: 3.2rem;
+  }
+
+  .inputCell input {
+    font-size: 1rem;
+    padding: 10px 45px 10px 14px;
+  }
+
+  .registerDiv h2 {
+    font-size: 1.3rem;
+    line-height: 1.4;
+  }
+
+  .registerDiv p {
+    font-size: 1rem;
+  }
+}

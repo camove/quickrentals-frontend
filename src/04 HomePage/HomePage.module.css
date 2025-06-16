@@ -1,0 +1,801 @@
+.container {
+  min-height: 82vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa, #e8f4f8);
+}
+
+.title {
+  text-align: center;
+  font-size: 3.5rem;
+  letter-spacing: 1.5px;
+  color: var(--violet-eggplant);
+  margin-bottom: 3rem;
+  font-weight: 800;
+}
+
+.filtersSection,
+.sortSection {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(135, 84, 165, 0.2);
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--violet-eggplant);
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filtersContainer,
+.sortContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.filterGroup,
+.sortGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Filtre */
+.filterLabel,
+.sortLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--violet-eggplant);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.filterInput,
+.filterSelect,
+.sortSelect {
+  padding: 0.8rem 1.2rem;
+  border: 2px solid rgba(135, 84, 165, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--violet-eggplant);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.filterInput:focus,
+.filterSelect:focus,
+.sortSelect:focus {
+  border-color: var(--violet-eggplant);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(135, 84, 165, 0.2);
+}
+
+.filterInput::placeholder {
+  color: #666;
+  font-style: italic;
+}
+
+/* Sortare */
+.sortOrderButton {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, var(--cornflower-blue), #5b9bd5);
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.sortOrderButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--violet-eggplant), #6a1b57);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(108, 180, 238, 0.4);
+}
+
+.sortOrderButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.resultsInfo {
+  text-align: center;
+  margin-bottom: 2rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.resultsCount {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--violet-eggplant);
+  background: rgba(135, 84, 165, 0.1);
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(135, 84, 165, 0.2);
+}
+
+.applyButton,
+.resetButton {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.applyButton {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.applyButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+}
+
+.resetButton {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+}
+
+.resetButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(107, 114, 128, 0.6);
+}
+
+/* Grid de carduri */
+.flatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.flatCard {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.flatCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.flatImage {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.flatImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  transition: transform 0.3s ease;
+}
+
+.flatCard:hover .flatImage img {
+  transform: scale(1.05);
+}
+
+.favoriteButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.favoriteButton:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.favoriteButton.active {
+  background: #ffe0e0;
+}
+
+.flatContent {
+  padding: 1.5rem;
+}
+
+.flatCity {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--violet-eggplant);
+  margin-bottom: 1rem;
+}
+
+.flatDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flatArea {
+  font-size: 1.1rem;
+  color: #6c757d;
+}
+
+.flatPrice {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cornflower-blue);
+}
+
+/* Loading */
+.loaderContainer {
+  min-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--purple-heart-6);
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.loadingText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--violet-eggplant);
+  margin-top: 1rem;
+}
+
+/* No Results */
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6c757d;
+}
+
+.noResults h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 1rem;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modalCloseButton:hover {
+  background: white;
+  transform: rotate(90deg);
+}
+
+/* Carousel */
+.imageCarousel {
+  position: relative;
+  height: 400px;
+  background: #f0f0f0;
+}
+
+.modalImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.carouselButton:first-of-type {
+  left: 1rem;
+}
+
+.carouselButton:last-of-type {
+  right: 1rem;
+}
+
+.carouselButton:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.imageDots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 5;
+}
+
+.dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.activeDot {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* Detalii Modal */
+.modalDetails {
+  padding: 1rem;
+}
+
+.modalDetails h2 {
+  font-size: 2rem;
+  color: var(--violet-eggplant);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detailItem {
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+.detailItem strong {
+  display: block;
+  color: var(--violet-eggplant);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailItem p {
+  color: #495057;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.viewDetailsButton {
+  flex: 1;
+  padding: 1rem;
+  background: var(--cornflower-blue);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.viewDetailsButton:hover {
+  background: var(--violet-eggplant);
+  transform: translateY(-2px);
+}
+
+.modalFavoriteButton {
+  flex: 1;
+  padding: 1rem;
+  background: transparent;
+  color: var(--violet-eggplant);
+  border: 2px solid var(--violet-eggplant);
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modalFavoriteButton:hover {
+  background: var(--violet-eggplant);
+  color: white;
+}
+
+.modalFavoriteButton.active {
+  background: #ffe0e0;
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.paginationInfo {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.paginationButton {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #dee2e6;
+  background: white;
+  color: #495057;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  min-width: 40px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginationButton:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #adb5bd;
+  color: #212529;
+}
+
+.paginationButton:disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.paginationActive {
+  background: #007bff !important;
+  border-color: #007bff !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+.paginationActive:hover {
+  background: #0056b3 !important;
+  border-color: #0056b3 !important;
+}
+
+.paginationPrev,
+.paginationNext {
+  min-width: auto;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.paginationEllipsis {
+  padding: 0.5rem 0.25rem;
+  color: #6c757d;
+  font-weight: bold;
+  user-select: none;
+}
+
+.resultsPerPage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.resultsPerPage label {
+  font-weight: 500;
+}
+
+.resultsPerPageSelect {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: white;
+  color: #495057;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+.resultsPerPageSelect:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+ .container {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .filtersSection,
+  .sortSection {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .filtersContainer,
+  .sortContainer {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .applyButton,
+  .resetButton {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .filterGroup {
+    flex-direction: column;
+  }
+  
+  .filterInput {
+    width: 100%;
+  }
+  
+  .sortGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .flatsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .modalContent {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  .imageCarousel {
+    height: 250px;
+  }
+  
+  .modalActions {
+    flex-direction: column;
+  }
+
+   .paginationContainer {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .paginationControls {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .paginationInfo,
+  .resultsPerPage {
+    justify-content: center;
+  }
+  
+  .paginationButton {
+    min-width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
+  
+  .paginationPrev,
+  .paginationNext {
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flatImage {
+    height: 200px;
+  }
+  
+  .modalDetails {
+    padding: 1.5rem;
+  }
+  
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+  
+  .filtersSection,
+  .sortSection {
+    padding: 1rem;
+  }
+}
+
+/* Loading state for grid */
+.flatsGrid.loading {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Smooth transition for grid */
+.flatsGrid {
+  transition: opacity 0.2s ease;
+}
+
+/* Loading state for pagination */
+.paginationContainer.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Hover effects */
+.paginationControls .paginationButton:not(.paginationActive):not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* FOCUS IMPROVEMENTS */
+.applyButton:focus,
+.resetButton:focus {
+  outline: 2px solid rgba(135, 84, 165, 0.5);
+  outline-offset: 2px;
+}
+
+@media (max-width: 400px) {
+  .modalOverlay {
+    padding: 0.5rem; 
+  }
+  
+  .modalContent {
+    margin: 0.5rem;
+    max-width: calc(100vw - 1rem);
+    width: calc(100vw - 1rem);
+  }
+  
+  .imageCarousel {
+    height: 200px; 
+  }
+  
+  .modalDetails {
+    padding: 1rem; 
+  }
+}

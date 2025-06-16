@@ -1,0 +1,145 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.formContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputCell {
+  width: 100%;
+  position: relative;
+}
+
+.inputCell input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  color: var(--violet-eggplant);
+  border: 2px solid #e9ecef;
+  border-radius: 0.8rem;
+  background: white;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.inputCell input:focus {
+  outline: none;
+  border-color: var(--cornflower-blue);
+  box-shadow: 0 0 0 3px rgba(108, 180, 238, 0.1);
+  background: rgba(108, 180, 238, 0.02);
+}
+
+.inputCell input:hover {
+  border-color: var(--cornflower-blue);
+}
+
+.inputError {
+  border-color: #e74c3c !important;
+  background: rgba(231, 76, 60, 0.05) !important;
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
+}
+
+.errorMessage {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+/* Checkbox Styling */
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--violet-eggplant);
+  font-weight: 500;
+  user-select: none;
+}
+
+.customCheckbox {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.customCheckboxIndicator {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--cornflower-blue);
+  border-radius: 0.4rem;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.customCheckbox:checked + .customCheckboxIndicator {
+  background: var(--cornflower-blue);
+  border-color: var(--cornflower-blue);
+}
+
+.customCheckbox:checked + .customCheckboxIndicator:after {
+  content: '✓';
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.checkboxLabel:hover .customCheckboxIndicator {
+  border-color: var(--violet-eggplant);
+  box-shadow: 0 0 0 3px rgba(108, 180, 238, 0.1);
+}
+
+.dateLabel {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--violet-eggplant);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.inputCell:has(.dateLabel) input {
+  margin-top: 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .inputCell input {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .checkboxLabel {
+    font-size: 1rem;
+  }
+  
+  .customCheckboxIndicator {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.8rem;
+  }
+  
+  .errorMessage {
+    font-size: 0.85rem;
+  }
+}

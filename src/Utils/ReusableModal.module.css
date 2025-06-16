@@ -1,0 +1,339 @@
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+  animation: overlayFadeIn 0.3s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+/* Modal Content Container */
+.modalContent {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: modalSlideIn 0.3s ease-out;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #374151 !important;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Modal Title */
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Type-specific title colors */
+.deleteTitle {
+  color: #dc2626;
+}
+
+.logoutTitle {
+  color: #f59e0b;
+}
+
+.warningTitle {
+  color: #f59e0b;
+}
+
+.infoTitle {
+  color: var(--cornflower-blue);
+}
+
+/* Modal Message */
+.modalMessage {
+  margin: 0 0 1.5rem 0;
+  line-height: 1.6;
+  color: #374151 !important;
+}
+
+.modalMessage p {
+  font-size: 1.1rem;
+  color: #374151 !important;
+  margin: 0 0 0.5rem 0;
+}
+
+.modalMessage strong {
+  color: var(--violet-eggplant);
+  font-weight: 600;
+}
+
+/* Warning Text */
+.modalWarning {
+  font-size: 0.9rem;
+  color: #dc2626;
+  margin: 0 0 2rem 0;
+  font-style: italic;
+  background: #fee2e2;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid #dc2626;
+}
+
+/* Modal Buttons Container */
+.modalButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Base Button Styles */
+.confirmButton,
+.cancelButton {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  font-size: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.confirmButton:disabled,
+.cancelButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Confirm Button Types */
+.deleteButton {
+  background: #dc2626;
+  color: white;
+  border: 2px solid #dc2626;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #b91c1c;
+  border-color: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.logoutButton {
+  background: #f59e0b;
+  color: white;
+  border: 2px solid #f59e0b;
+}
+
+.logoutButton:hover:not(:disabled) {
+  background: #d97706;
+  border-color: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.warningButton {
+  background: #f59e0b;
+  color: white;
+  border: 2px solid #f59e0b;
+}
+
+.warningButton:hover:not(:disabled) {
+  background: #d97706;
+  border-color: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.infoButton {
+  background: var(--cornflower-blue);
+  color: white;
+  border: 2px solid var(--cornflower-blue);
+}
+
+.infoButton:hover:not(:disabled) {
+  background: var(--violet-eggplant);
+  border-color: var(--violet-eggplant);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 21, 75, 0.4);
+}
+
+/* Cancel Button */
+.cancelButton {
+  background: #f3f4f6;
+  color: #374151;
+  border: 2px solid #d1d5db;
+}
+
+.cancelButton:hover:not(:disabled) {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(156, 163, 175, 0.3);
+}
+
+/* Loading Content */
+.loadingContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Spinner Animation */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Type-specific modal backgrounds */
+.deleteModal {
+  border-top: 4px solid #dc2626;
+}
+
+.logoutModal {
+  border-top: 4px solid #f59e0b;
+}
+
+.warningModal {
+  border-top: 4px solid #f59e0b;
+}
+
+.infoModal {
+  border-top: 4px solid var(--cornflower-blue);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .modalContent {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  .modalTitle {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .modalMessage p {
+    font-size: 1rem;
+  }
+
+  .modalButtons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .confirmButton,
+  .cancelButton {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .modalWarning {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 1rem;
+    border-radius: 0.8rem;
+    max-height: 95vh;
+  }
+
+  .modalTitle {
+    font-size: 1.3rem;
+  }
+
+  .modalMessage p {
+    font-size: 0.95rem;
+  }
+
+  .confirmButton,
+  .cancelButton {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .modalContent {
+    border: 2px solid #000;
+  }
+  
+  .confirmButton,
+  .cancelButton {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .modalOverlay,
+  .modalContent {
+    animation: none;
+  }
+  
+  .confirmButton:hover,
+  .cancelButton:hover {
+    transform: none;
+  }
+  
+  .spinner {
+    animation: none;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-top: 2px solid white;
+  }
+}
