@@ -28,78 +28,82 @@ const AllUsers = () => {
     currentPage: 1,
     totalPages: 1,
     totalResults: 0,
-    resultsPerPage: 12
+    resultsPerPage: 12,
   });
 
   useEffect(() => {
     if (!token) return;
 
     // Citim valorile din URL
-    const pageFromURL = parseInt(searchParams.get('page')) || 1;
-    const limitFromURL = parseInt(searchParams.get('limit')) || 12;
+    const pageFromURL = parseInt(searchParams.get("page")) || 1;
+    const limitFromURL = parseInt(searchParams.get("limit")) || 12;
 
     // Actualizam pagination state-ul
-    setPagination(prev => ({
+    setPagination((prev) => ({
       ...prev,
       currentPage: pageFromURL,
-      resultsPerPage: limitFromURL
+      resultsPerPage: limitFromURL,
     }));
 
     // Fetch direct cu valorile din URL
     fetchUsersWithURLParams(pageFromURL, limitFromURL);
-  }, [token, searchParams]); 
+  }, [token, searchParams]);
 
   // FETCH function care foloseste parametrii din URL direct
   const fetchUsersWithURLParams = async (page, limit) => {
     try {
       setLoading(true);
-      
+
       // Construim query params cu valorile din URL
       const queryParams = new URLSearchParams({
         page: page.toString(),
-        limit: limit.toString()
+        limit: limit.toString(),
       });
-      
+
       // Adsugsm filtrele di sortarea din state
-      if (filters.userType) queryParams.append('userType', filters.userType);
-      if (filters.ageRange) queryParams.append('ageRange', filters.ageRange);
-      if (filters.flatsCountRange) queryParams.append('flatsCountRange', filters.flatsCountRange);
+      if (filters.userType) queryParams.append("userType", filters.userType);
+      if (filters.ageRange) queryParams.append("ageRange", filters.ageRange);
+      if (filters.flatsCountRange)
+        queryParams.append("flatsCountRange", filters.flatsCountRange);
       if (sortCriteria) {
-        const sortString = sortOrder === 'desc' ? `-${sortCriteria}` : sortCriteria;
-        queryParams.append('sort', sortString);
+        const sortString =
+          sortOrder === "desc" ? `-${sortCriteria}` : sortCriteria;
+        queryParams.append("sort", sortString);
       }
-      
-      const response = await fetch(`http://localhost:3000/users?${queryParams.toString()}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+
+      const response = await fetch(
+        `https://quickrentals-backend.onrender.com/users?${queryParams.toString()}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
         // console.log('Users API Response:', data);
-        
+
         setUsers(data.data || []);
-        
+
         // PAGINATION STATE
         setPagination({
           currentPage: data.currentPage || page,
           totalPages: data.totalPages || 1,
           totalResults: data.totalResults || 0,
-          resultsPerPage: limit
+          resultsPerPage: limit,
         });
-        
       } else {
         const errorData = await response.json();
-        console.error('Error fetching users:', errorData);
-        
+        console.error("Error fetching users:", errorData);
+
         if (response.status === 401) {
           toast.error("Session expired. Please login again.");
-          navigate('/login');
+          navigate("/login");
         } else if (response.status === 403) {
           toast.error("Access denied. Admin rights required.");
-          navigate('/home');
+          navigate("/home");
         } else {
           toast.error("Failed to load users");
         }
@@ -115,9 +119,9 @@ const AllUsers = () => {
   // Gestionare filtre si sortare
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -126,17 +130,17 @@ const AllUsers = () => {
   };
 
   const handleSortOrderChange = () => {
-    setSortOrder(prev => prev === "asc" ? "desc" : "asc");
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
   };
 
   const resetFiltersAndSort = () => {
     setFilters({ ageRange: "", flatsCountRange: "", userType: "" });
     setSortCriteria("");
     setSortOrder("asc");
-    
+
     // Reset to page 1 and fetch without filters
     setSearchParams({
-      page: '1',
+      page: "1",
       limit: pagination.resultsPerPage.toString(),
     });
   };
@@ -145,15 +149,15 @@ const AllUsers = () => {
   const applyFilters = () => {
     // Reset to page 1 when applying filters
     setSearchParams({
-      page: '1',
+      page: "1",
       limit: pagination.resultsPerPage.toString(),
       ageRange: filters.ageRange,
-        flatsCountRange: filters.flatsCountRange,
-        userType: filters.userType,
-        sortBy: sortCriteria,
-        sortOrder: sortOrder
+      flatsCountRange: filters.flatsCountRange,
+      userType: filters.userType,
+      sortBy: sortCriteria,
+      sortOrder: sortOrder,
     });
-    
+
     // Fetch-ul se va face automat prin useEffect cand se schimba searchParams
     toast.success(`Filters applied!`);
   };
@@ -172,32 +176,35 @@ const AllUsers = () => {
   // RESULTS PER PAGE CHANGE
   const handleResultsPerPageChange = (newLimit) => {
     setSearchParams({
-      page: '1', // Reset to first page
-      limit: newLimit.toString()
+      page: "1", // Reset to first page
+      limit: newLimit.toString(),
     });
   };
 
   // Toggle admin permissions
   const toggleAdminPermissions = async (userId, currentRole) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${userId}/role`, {
-        method: 'PATCH',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `https://quickrentals-backend.onrender.com/users/${userId}/role`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
         toast.success(data.message);
-        
+
         // Update local state
-        setUsers(prev => prev.map(user => 
-          user._id === userId 
-            ? { ...user, isAdmin: data.data.isAdmin }
-            : user
-        ));
+        setUsers((prev) =>
+          prev.map((user) =>
+            user._id === userId ? { ...user, isAdmin: data.data.isAdmin } : user
+          )
+        );
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || "Failed to change user role");
@@ -217,25 +224,28 @@ const AllUsers = () => {
   // Delete user
   const deleteUser = async () => {
     if (!userToDelete) return;
-    
+
     setDeleting(true);
     try {
-      const response = await fetch(`http://localhost:3000/users/${userToDelete._id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `https://quickrentals-backend.onrender.com/users/${userToDelete._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (response.ok) {
         toast.success("User deleted successfully");
-        
+
         // Re-fetch pentru a actualiza paginarea corect
-        const currentPage = parseInt(searchParams.get('page')) || 1;
-        const currentLimit = parseInt(searchParams.get('limit')) || 12;
+        const currentPage = parseInt(searchParams.get("page")) || 1;
+        const currentLimit = parseInt(searchParams.get("limit")) || 12;
         fetchUsersWithURLParams(currentPage, currentLimit);
-        
+
         setShowDeleteModal(false);
         setUserToDelete(null);
       } else {
@@ -262,8 +272,11 @@ const AllUsers = () => {
     const birth = new Date(birthDate);
     const age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
       return age - 1;
     }
     return age;
@@ -271,36 +284,33 @@ const AllUsers = () => {
 
   return (
     <div className={styles.container}>
-      <Toaster 
+      <Toaster
         position="top-center"
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#363636',
-            color: '#fff',
+            background: "#363636",
+            color: "#fff",
           },
           success: {
             duration: 3000,
             style: {
-              background: '#10b981',
-              color: 'white',
+              background: "#10b981",
+              color: "white",
             },
           },
           error: {
             duration: 4000,
             style: {
-              background: '#ef4444',
-              color: 'white',
+              background: "#ef4444",
+              color: "white",
             },
           },
         }}
       />
 
       <div className={styles.header}>
-        <button 
-          onClick={() => navigate(-1)}
-          className={styles.backButton}
-        >
+        <button onClick={() => navigate(-1)} className={styles.backButton}>
           ← Back
         </button>
         <h1 className={styles.title}>All Users Management</h1>
@@ -309,9 +319,7 @@ const AllUsers = () => {
       {loading ? (
         <div className={styles.loaderContainer}>
           <div className={styles.loader}></div>
-          <div className={styles.loadingText}>
-            Loading users data... 👥
-          </div>
+          <div className={styles.loadingText}>Loading users data... 👥</div>
         </div>
       ) : (
         <>
@@ -330,7 +338,7 @@ const AllUsers = () => {
                   className={styles.filterInput}
                 />
               </div>
-              
+
               <div className={styles.filterGroup}>
                 <label className={styles.filterLabel}>Flats Count</label>
                 <input
@@ -342,7 +350,7 @@ const AllUsers = () => {
                   className={styles.filterInput}
                 />
               </div>
-              
+
               <div className={styles.filterGroup}>
                 <label className={styles.filterLabel}>User Type</label>
                 <select
@@ -377,7 +385,7 @@ const AllUsers = () => {
                   <option value="email">Email</option>
                 </select>
               </div>
-              
+
               <button
                 onClick={handleSortOrderChange}
                 className={styles.sortOrderButton}
@@ -393,7 +401,10 @@ const AllUsers = () => {
             <button onClick={applyFilters} className={styles.applyButton}>
               Apply Filters & Sort
             </button>
-            <button onClick={resetFiltersAndSort} className={styles.resetButton}>
+            <button
+              onClick={resetFiltersAndSort}
+              className={styles.resetButton}
+            >
               Reset All
             </button>
           </div>
@@ -401,7 +412,8 @@ const AllUsers = () => {
           {/* Results Count */}
           <div className={styles.resultsInfo}>
             <span className={styles.resultsCount}>
-              Found {pagination.totalResults} user{pagination.totalResults !== 1 ? 's' : ''}
+              Found {pagination.totalResults} user
+              {pagination.totalResults !== 1 ? "s" : ""}
             </span>
           </div>
 
@@ -427,29 +439,43 @@ const AllUsers = () => {
             {users.map((user) => (
               <React.Fragment key={user._id}>
                 <div className={styles.gridItem}>
-                  <strong>{user.firstName} {user.lastName}</strong>
+                  <strong>
+                    {user.firstName} {user.lastName}
+                  </strong>
                 </div>
                 <div className={styles.gridItem}>{user.email}</div>
                 <div className={styles.gridItem}>
                   {calculateAge(user.birthDate)}
                 </div>
                 <div className={styles.gridItem}>
-                  <span className={`${styles.roleTag} ${user.isAdmin === 'admin' ? styles.adminTag : styles.userTag}`}>
-                    {user.isAdmin === 'admin' ? '👑 Admin' : '👤 User'}
+                  <span
+                    className={`${styles.roleTag} ${
+                      user.isAdmin === "admin"
+                        ? styles.adminTag
+                        : styles.userTag
+                    }`}
+                  >
+                    {user.isAdmin === "admin" ? "👑 Admin" : "👤 User"}
                   </span>
                 </div>
                 <div className={styles.gridItem}>
-                  <span className={styles.flatsCount}>{user.flatsCount || 0}</span>
+                  <span className={styles.flatsCount}>
+                    {user.flatsCount || 0}
+                  </span>
                 </div>
                 <div className={styles.gridItem}>
                   <div className={styles.actionContainer}>
                     {user._id !== loggedInUserId ? (
                       <>
                         <button
-                          onClick={() => toggleAdminPermissions(user._id, user.isAdmin)}
+                          onClick={() =>
+                            toggleAdminPermissions(user._id, user.isAdmin)
+                          }
                           className={`${styles.actionButton} ${styles.roleButton}`}
                         >
-                          {user.isAdmin === 'admin' ? 'Make User' : 'Make Admin'}
+                          {user.isAdmin === "admin"
+                            ? "Make User"
+                            : "Make Admin"}
                         </button>
                         <button
                           onClick={() => prepareDeleteUser(user)}
@@ -459,7 +485,9 @@ const AllUsers = () => {
                         </button>
                       </>
                     ) : (
-                      <span className={styles.currentUserLabel}>Current User</span>
+                      <span className={styles.currentUserLabel}>
+                        Current User
+                      </span>
                     )}
                     <NavLink
                       to={`/edit-profile/${user._id}`}
@@ -481,25 +509,39 @@ const AllUsers = () => {
                   <h3 className={styles.userName}>
                     {user.firstName} {user.lastName}
                   </h3>
-                  <span className={`${styles.roleTag} ${user.isAdmin === 'admin' ? styles.adminTag : styles.userTag}`}>
-                    {user.isAdmin === 'admin' ? '👑 Admin' : '👤 User'}
+                  <span
+                    className={`${styles.roleTag} ${
+                      user.isAdmin === "admin"
+                        ? styles.adminTag
+                        : styles.userTag
+                    }`}
+                  >
+                    {user.isAdmin === "admin" ? "👑 Admin" : "👤 User"}
                   </span>
                 </div>
-                
+
                 <div className={styles.userInfo}>
-                  <p><strong>Email:</strong> {user.email}</p>
-                  <p><strong>Age:</strong> {calculateAge(user.birthDate)}</p>
-                  <p><strong>Flats Posted:</strong> {user.flatsCount || 0}</p>
+                  <p>
+                    <strong>Email:</strong> {user.email}
+                  </p>
+                  <p>
+                    <strong>Age:</strong> {calculateAge(user.birthDate)}
+                  </p>
+                  <p>
+                    <strong>Flats Posted:</strong> {user.flatsCount || 0}
+                  </p>
                 </div>
-                
+
                 <div className={styles.userActions}>
                   {user._id !== loggedInUserId ? (
                     <>
                       <button
-                        onClick={() => toggleAdminPermissions(user._id, user.isAdmin)}
+                        onClick={() =>
+                          toggleAdminPermissions(user._id, user.isAdmin)
+                        }
                         className={`${styles.actionButton} ${styles.roleButton}`}
                       >
-                        {user.isAdmin === 'admin' ? 'Make User' : 'Make Admin'}
+                        {user.isAdmin === "admin" ? "Make User" : "Make Admin"}
                       </button>
                       <button
                         onClick={() => prepareDeleteUser(user)}
@@ -509,7 +551,9 @@ const AllUsers = () => {
                       </button>
                     </>
                   ) : (
-                    <span className={styles.currentUserLabel}>Current User</span>
+                    <span className={styles.currentUserLabel}>
+                      Current User
+                    </span>
                   )}
                   <NavLink
                     to={`/edit-profile/${user._id}`}
@@ -550,22 +594,30 @@ const AllUsers = () => {
         message={
           userToDelete ? (
             <>
-              Are you sure you want to delete <strong>{userToDelete.firstName} {userToDelete.lastName}</strong>'s account permanently?
+              Are you sure you want to delete{" "}
+              <strong>
+                {userToDelete.firstName} {userToDelete.lastName}
+              </strong>
+              's account permanently?
               <br />
               <strong>This will also delete:</strong>
-              <ul style={{ 
-                textAlign: 'left', 
-                margin: '1rem 0', 
-                paddingLeft: '1.5rem',
-                color: '#374151'
-              }}>
+              <ul
+                style={{
+                  textAlign: "left",
+                  margin: "1rem 0",
+                  paddingLeft: "1.5rem",
+                  color: "#374151",
+                }}
+              >
                 <li>All their posted apartments</li>
                 <li>All their messages</li>
                 <li>Their apartments from other users' favorites</li>
                 <li>Their profile data</li>
               </ul>
             </>
-          ) : ""
+          ) : (
+            ""
+          )
         }
         warning="This action cannot be undone. All user data will be permanently deleted from our servers."
         confirmText="Yes, Delete User Account"

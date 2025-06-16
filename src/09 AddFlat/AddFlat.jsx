@@ -5,10 +5,10 @@ import { AuthContext } from "../Context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import FlatFormFields from "../Utils/FlatFormFields";
 
-// Action pentru React Router 
+// Action pentru React Router
 export const actionAddFlat = async ({ request }) => {
   const formData = await request.formData();
-  
+
   // Validari frontend (inainte de trimitere la backend)
   const errors = {};
   const city = formData.get("city");
@@ -16,7 +16,7 @@ export const actionAddFlat = async ({ request }) => {
   const areaSize = formData.get("areaSize");
   const yearBuilt = formData.get("yearBuilt");
   const availableDate = formData.get("dateAvailable");
-  
+
   if (!city || city.length < 2) {
     errors.city = "City must have at least two characters";
   }
@@ -29,7 +29,7 @@ export const actionAddFlat = async ({ request }) => {
   if (isNaN(parseInt(yearBuilt)) || parseInt(yearBuilt) < 1000) {
     errors.yearBuilt = "Year build must be a number and greater than 1000";
   }
-  
+
   const currentDate = new Date();
   const inputDate = new Date(availableDate);
   if (inputDate <= currentDate) {
@@ -42,7 +42,7 @@ export const actionAddFlat = async ({ request }) => {
 
   try {
     // Obtine token-ul din localStorage
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
       return { success: false, error: "Authentication required" };
     }
@@ -52,20 +52,23 @@ export const actionAddFlat = async ({ request }) => {
     formData.set("hasAc", hasAcValue === "on" ? "true" : "false");
 
     // Trimite la backend cu multer upload
-    const response = await fetch('http://localhost:3000/flats', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`
-        // Nu adaugam Content-Type pentru FormData - browser-ul o face automat
-      },
-      body: formData // FormData cu imagini
-    });
+    const response = await fetch(
+      "https://quickrentals-backend.onrender.com/flats",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Nu adaugam Content-Type pentru FormData - browser-ul o face automat
+        },
+        body: formData, // FormData cu imagini
+      }
+    );
 
     if (!response.ok) {
       // Pentru debugging CORS
-      console.error('Response status:', response.status);
-      console.error('Response headers:', response.headers);
-      
+      console.error("Response status:", response.status);
+      console.error("Response headers:", response.headers);
+
       // Incearca sa citesti raspunsul doar daca e JSON
       try {
         const data = await response.json();
@@ -74,7 +77,7 @@ export const actionAddFlat = async ({ request }) => {
         return { success: false, error: `Server error: ${response.status}` };
       }
     }
-    
+
     const data = await response.json();
     return { success: true, data: data.data };
   } catch (error) {
@@ -90,11 +93,11 @@ const AddFlat = () => {
     city: "",
     streetName: "",
     streetNumber: "",
-    areaSize: "", 
+    areaSize: "",
     hasAc: false,
-    yearBuilt: "", 
-    rentPrice: "", 
-    dateAvailable: "", 
+    yearBuilt: "",
+    rentPrice: "",
+    dateAvailable: "",
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [errors, setErrors] = useState({});
@@ -137,7 +140,7 @@ const AddFlat = () => {
 
   // Stergere fisier specific
   const removeFile = (indexToRemove) => {
-    setSelectedFiles(prevFiles => 
+    setSelectedFiles((prevFiles) =>
       prevFiles.filter((_, index) => index !== indexToRemove)
     );
   };
@@ -147,23 +150,29 @@ const AddFlat = () => {
     setSelectedFiles([]);
     // Reset input file
     const fileInput = document.querySelector('input[type="file"]');
-    if (fileInput) fileInput.value = '';
+    if (fileInput) fileInput.value = "";
   };
 
   // Validari in timp real
   const validate = (e) => {
     const { name, value } = e.target;
     let error = "";
-    
+
     if (name === "city" && (!value || value.length < 2)) {
       error = "City is required and must be at least two letters long.";
     } else if (name === "streetName" && !value) {
       error = "Street name is required.";
     } else if (name === "streetNumber" && !value) {
       error = "Street number is required.";
-    } else if (name === "areaSize" && (isNaN(parseInt(value)) || parseInt(value) < 10)) {
+    } else if (
+      name === "areaSize" &&
+      (isNaN(parseInt(value)) || parseInt(value) < 10)
+    ) {
       error = "Size must be a number and greater than 10 sq meters.";
-    } else if (name === "yearBuilt" && (isNaN(parseInt(value)) || parseInt(value) < 1000)) {
+    } else if (
+      name === "yearBuilt" &&
+      (isNaN(parseInt(value)) || parseInt(value) < 1000)
+    ) {
       error = "Year build must be a number and greater than 1000.";
     } else if (name === "rentPrice" && !value) {
       error = "Price is required.";
@@ -181,36 +190,40 @@ const AddFlat = () => {
   return (
     <div className={styles.container}>
       <div>
-        <Toaster 
+        <Toaster
           position="top-center"
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#363636',
-              color: '#fff',
+              background: "#363636",
+              color: "#fff",
             },
             success: {
               duration: 3000,
               style: {
-                background: '#10b981',
-                color: 'white',
+                background: "#10b981",
+                color: "white",
               },
             },
             error: {
               duration: 4000,
               style: {
-                background: '#ef4444',
-                color: 'white',
+                background: "#ef4444",
+                color: "white",
               },
             },
           }}
         />
       </div>
-      
+
       <div className={styles.formWrapper}>
         <h1 className={styles.title}>Add New Flat</h1>
-        
-        <Form method="post" encType="multipart/form-data" className={styles.form}>
+
+        <Form
+          method="post"
+          encType="multipart/form-data"
+          className={styles.form}
+        >
           {/* FlatFormFields pentru campurile de baza */}
           <FlatFormFields
             formData={formData}
@@ -218,7 +231,7 @@ const AddFlat = () => {
             errors={errors}
             validate={validate}
           />
-          
+
           {/* Upload imagini */}
           <div className={styles.uploadSection}>
             <label className={styles.uploadLabel}>
@@ -232,12 +245,12 @@ const AddFlat = () => {
               onChange={handleFileChange}
               className={styles.fileInput}
             />
-            
+
             {selectedFiles.length > 0 && (
               <div className={styles.selectedFiles}>
                 <div className={styles.filesHeader}>
                   <p>Selected files:</p>
-                  <button 
+                  <button
                     type="button"
                     onClick={clearAllFiles}
                     className={styles.clearAllButton}

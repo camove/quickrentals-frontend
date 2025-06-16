@@ -11,7 +11,7 @@ import { AuthContext } from "../Context/AuthContext";
 //* Action function pentru prelucradea datelor din formular *//
 export const actionRegisterUser = async ({ request }) => {
   const formData = await request.formData();
-  
+
   //-> Se creeaza obiectul user cu proprietatile preluate din input-uri
   const user = {
     email: formData.get("email"),
@@ -25,28 +25,28 @@ export const actionRegisterUser = async ({ request }) => {
 
   //-> Creare obiect gol errors, care ulterior se populează cu proprietătile email, password, etc care au valorile egale cu mesajul de eroare
   const errors = {};
-  
+
   if (!emailPattern.test(user.email)) {
     errors.email = "Invalid e-mail format.";
   }
-  
+
   if (!passwordPattern.test(user.password)) {
     errors.password =
       "Password must contain at least 8 characters: letters, numbers and one special character.";
   }
-  
+
   if (user.password !== user.confirmPassword) {
     errors.repeatPassword = "Passwords does not match.";
   }
-  
+
   if (user.firstName.length < 2) {
     errors.firstName = "First name must have at least two characters.";
   }
-  
+
   if (user.lastName.length < 2) {
     errors.lastName = "Last name must have at least two characters.";
   }
-  
+
   const today = new Date();
   const birthDate = new Date(user.birthDate);
   const age = today.getFullYear() - birthDate.getFullYear();
@@ -61,13 +61,16 @@ export const actionRegisterUser = async ({ request }) => {
 
   try {
     // Inlocuieste Firebase addDoc cu fetch catre backend
-    const response = await fetch('http://localhost:3000/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    });
+    const response = await fetch(
+      "https://quickrentals-backend.onrender.com/users",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      }
+    );
 
     const data = await response.json();
 
@@ -143,9 +146,12 @@ const Register = () => {
       const today = new Date();
       const birthDate = new Date(value);
 
-      let age = today.getFullYear() - birthDate.getFullYear()
-      const monthDiff = today.getMonth()-birthDate.getMonth()
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
         age--;
       }
       if (age < 18 || age > 120) {
@@ -157,9 +163,10 @@ const Register = () => {
   };
 
   // Check if form is valid - pentru a activa/dezactiva butonul
-  const isFormValid = Object.values(errors).every(error => !error) && 
-                     Object.values(formData).every(value => value.trim() !== '') &&
-                     formData.password === formData.repeatPassword;
+  const isFormValid =
+    Object.values(errors).every((error) => !error) &&
+    Object.values(formData).every((value) => value.trim() !== "") &&
+    formData.password === formData.repeatPassword;
 
   const handleLoginRedirect = () => {
     navigate("/login");
@@ -167,32 +174,32 @@ const Register = () => {
 
   return (
     <div className={styles.container}>
-      <Toaster 
+      <Toaster
         position="top-center"
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#363636',
-            color: '#fff',
+            background: "#363636",
+            color: "#fff",
           },
           success: {
             duration: 3000,
             style: {
-              background: '#10b981',
-              color: 'white',
+              background: "#10b981",
+              color: "white",
             },
           },
           error: {
             duration: 4000,
             style: {
-              background: '#ef4444',
-              color: 'white',
+              background: "#ef4444",
+              color: "white",
             },
           },
         }}
       />
-      
-        <div className={styles.loginSection}>
+
+      <div className={styles.loginSection}>
         <div>
           <h2>Already have an account?</h2>
           <p>Sign in to access your profile</p>
@@ -209,7 +216,9 @@ const Register = () => {
       <div className={styles.formContainer}>
         <div className={styles.header}>
           <h1 className={styles.title}>CREATE ACCOUNT</h1>
-          <p className={styles.subtitle}>Join us to find your perfect home 🏠</p>
+          <p className={styles.subtitle}>
+            Join us to find your perfect home 🏠
+          </p>
         </div>
 
         {actionData?.success && (
@@ -219,9 +228,7 @@ const Register = () => {
         )}
 
         {actionData?.error && (
-          <div className={styles.errorMessage}>
-            ❌ {actionData.error}
-          </div>
+          <div className={styles.errorMessage}>❌ {actionData.error}</div>
         )}
 
         <Form method="post" className={styles.form}>
@@ -233,18 +240,18 @@ const Register = () => {
             validate={validate}
             setErrors={setErrors}
           />
-          
-          <button 
+
+          <button
             className={styles.submitButton}
             type="submit"
             disabled={!isFormValid}
           >
-            {!isFormValid ? 'Please fill all fields correctly' : 'Create Account'}
+            {!isFormValid
+              ? "Please fill all fields correctly"
+              : "Create Account"}
           </button>
         </Form>
       </div>
-      
-      
     </div>
   );
 };

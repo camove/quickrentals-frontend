@@ -142,7 +142,7 @@ const AuthProvider = ({ children }) => {
       if (userId && token) {
         try {
           const response = await fetch(
-            `http://localhost:3000/users/${userId}`,
+            `https://quickrentals-backend.onrender.com/users/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -206,13 +206,16 @@ const AuthProvider = ({ children }) => {
   //-> Functie pentru login
   const loginUser = async (email, password) => {
     try {
-      const response = await fetch("http://localhost:3000/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://quickrentals-backend.onrender.com/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
 
@@ -248,13 +251,16 @@ const AuthProvider = ({ children }) => {
   //-> Functie pentru register
   const registerUser = async (userData) => {
     try {
-      const response = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await fetch(
+        "https://quickrentals-backend.onrender.com/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
 
       const data = await response.json();
 

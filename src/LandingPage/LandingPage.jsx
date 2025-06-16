@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import styles from './LandingPage.module.css';
-import PaginationControls from '../Utils/PaginationControls';
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import styles from "./LandingPage.module.css";
+import PaginationControls from "../Utils/PaginationControls";
 
 const LandingPage = () => {
   const [flats, setFlats] = useState([]);
@@ -9,53 +9,55 @@ const LandingPage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   // PAGINATION STATE
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
     totalResults: 0,
-    resultsPerPage: 12
+    resultsPerPage: 12,
   });
 
   useEffect(() => {
     const fetchFlats = async () => {
       try {
         setLoading(true);
-        
+
         // Citim parametrii direct din URL
-        const page = parseInt(searchParams.get('page')) || 1;
-        const limit = parseInt(searchParams.get('limit')) || 12;
-        
+        const page = parseInt(searchParams.get("page")) || 1;
+        const limit = parseInt(searchParams.get("limit")) || 12;
+
         // Construim query params
         const queryParams = new URLSearchParams({
           page: page.toString(),
-          limit: limit.toString()
+          limit: limit.toString(),
         });
-        
+
         // console.log(`Fetching: page=${page}, limit=${limit}`);
-        
-        const response = await fetch(`http://localhost:3000/?${queryParams.toString()}`);
-        
+
+        const response = await fetch(
+          `https://quickrentals-backend.onrender.com/?${queryParams.toString()}`
+        );
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         // console.log('Landing API Response:', data);
-        
+
         // Actualizam state-ul cu datele primite
         setFlats(data.data || []);
         setPagination({
           currentPage: data.currentPage || page,
           totalPages: data.totalPages || 1,
           totalResults: data.totalResults || 0,
-          resultsPerPage: limit // folosim limit-ul din URL, nu din state
+          resultsPerPage: limit, // folosim limit-ul din URL, nu din state
         });
-        
+
         setError(null);
       } catch (error) {
-        console.error('❌ Error fetching flats:', error);
+        console.error("❌ Error fetching flats:", error);
         setError(`Failed to load properties: ${error.message}`);
       } finally {
         setLoading(false);
@@ -68,10 +70,10 @@ const LandingPage = () => {
   // PAGE CHANGE HANDLER
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= pagination.totalPages) {
-      const currentLimit = searchParams.get('limit') || '12';
+      const currentLimit = searchParams.get("limit") || "12";
       setSearchParams({
         page: newPage.toString(),
-        limit: currentLimit
+        limit: currentLimit,
       });
     }
   };
@@ -79,21 +81,21 @@ const LandingPage = () => {
   // RESULTS PER PAGE CHANGE
   const handleResultsPerPageChange = (newLimit) => {
     setSearchParams({
-      page: '1',
-      limit: newLimit.toString()
+      page: "1",
+      limit: newLimit.toString(),
     });
   };
 
   const handleGetStarted = () => {
-    navigate('/login');
+    navigate("/login");
   };
 
   const handleCreateAccount = () => {
-    navigate('/register');
+    navigate("/register");
   };
 
   const handleViewDetails = (flatId) => {
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -103,17 +105,15 @@ const LandingPage = () => {
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>Your Perfect Rental Awaits</h1>
           <p className={styles.heroSubtitle}>
-            Connect directly with property owners. No agencies, no delays, just results.
+            Connect directly with property owners. No agencies, no delays, just
+            results.
           </p>
           <div className={styles.heroButtons}>
-            <button 
-              className={styles.primaryButton} 
-              onClick={handleGetStarted}
-            >
+            <button className={styles.primaryButton} onClick={handleGetStarted}>
               Get Started
             </button>
-            <button 
-              className={styles.secondaryButton} 
+            <button
+              className={styles.secondaryButton}
               onClick={handleCreateAccount}
             >
               Create Account
@@ -129,12 +129,13 @@ const LandingPage = () => {
           <p className={styles.sectionSubtitle}>
             Browse our latest rental listings
           </p>
-          
+
           {/* RESULTS COUNT */}
           {!loading && !error && pagination.totalResults > 0 && (
             <div className={styles.resultsInfo}>
               <span className={styles.resultsCount}>
-                Showing {pagination.totalResults} propert{pagination.totalResults !== 1 ? 'ies' : 'y'}
+                Showing {pagination.totalResults} propert
+                {pagination.totalResults !== 1 ? "ies" : "y"}
               </span>
             </div>
           )}
@@ -152,7 +153,7 @@ const LandingPage = () => {
         {error && (
           <div className={styles.errorContainer}>
             <p className={styles.errorMessage}>{error}</p>
-            <button 
+            <button
               className={styles.retryButton}
               onClick={() => window.location.reload()}
             >
@@ -179,7 +180,7 @@ const LandingPage = () => {
                 <p className={styles.noPropertiesMessage}>
                   No properties available at the moment.
                 </p>
-                <button 
+                <button
                   className={styles.primaryButton}
                   onClick={handleCreateAccount}
                 >
@@ -193,14 +194,15 @@ const LandingPage = () => {
                     {flat.mainImage ? (
                       <img
                         src={
-                          flat.mainImage.startsWith('/uploads/') 
-                            ? `http://localhost:3000${flat.mainImage}`
-                            : `http://localhost:3000/uploads/${flat.mainImage}`
+                          flat.mainImage.startsWith("/uploads/")
+                            ? `https://quickrentals-backend.onrender.com${flat.mainImage}`
+                            : `https://quickrentals-backend.onrender.com/uploads/${flat.mainImage}`
                         }
                         alt={`Property in ${flat.city}`}
                         className={styles.propertyImage}
                         onError={(e) => {
-                          e.target.src = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop&crop=center';
+                          e.target.src =
+                            "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop&crop=center";
                         }}
                       />
                     ) : (
@@ -213,12 +215,12 @@ const LandingPage = () => {
                       €{flat.rentPrice}/month
                     </div>
                   </div>
-                  
+
                   <div className={styles.propertyInfo}>
                     <h3 className={styles.propertyTitle}>
                       Property in {flat.city}
                     </h3>
-                    <button 
+                    <button
                       className={styles.viewDetailsButton}
                       onClick={() => handleViewDetails(flat._id)}
                     >
@@ -249,7 +251,7 @@ const LandingPage = () => {
           <p className={styles.ctaSubtitle}>
             Join thousands of satisfied tenants and property owners
           </p>
-          <button 
+          <button
             className={styles.primaryButton}
             onClick={handleCreateAccount}
           >

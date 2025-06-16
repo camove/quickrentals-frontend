@@ -15,44 +15,47 @@ const FlatDetails = () => {
 
   // Fetch flat details
   useEffect(() => {
-  const fetchFlatDetails = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/flats/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+    const fetchFlatDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://quickrentals-backend.onrender.com/flats/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      if (response.ok) {
-        const data = await response.json();
-        const flatData = data.data || data;
-        console.log('🔍 Flat data loaded:', flatData);
-        setFlat(flatData);
-      } else {
-        // Check pentru 404 specific
-        if (response.status === 404 || response.status === 500) {
-          // Flat not found - redirect to 404 page
-          navigate('/404');
-          return; // opreste executia
+        if (response.ok) {
+          const data = await response.json();
+          const flatData = data.data || data;
+          console.log("🔍 Flat data loaded:", flatData);
+          setFlat(flatData);
         } else {
-          // Other errors - show toast and stay/go home
-          toast.error("Failed to load flat details");
-          navigate('/home');
+          // Check pentru 404 specific
+          if (response.status === 404 || response.status === 500) {
+            // Flat not found - redirect to 404 page
+            navigate("/404");
+            return; // opreste executia
+          } else {
+            // Other errors - show toast and stay/go home
+            toast.error("Failed to load flat details");
+            navigate("/home");
+          }
         }
+      } catch (error) {
+        console.error("Error fetching flat:", error);
+        // Network errors - raman la home (nu 404)
+        toast.error("Network error");
+        navigate("/home");
       }
-    } catch (error) {
-      console.error('Error fetching flat:', error);
-      // Network errors - raman la home (nu 404)
-      toast.error("Network error");
-      navigate('/home');
-    }
-  };
+    };
 
-  if (id && token) {
-    fetchFlatDetails();
-  }
-}, [id, token, navigate]);
+    if (id && token) {
+      fetchFlatDetails();
+    }
+  }, [id, token, navigate]);
 
   // Fetch messages for this apartment
   const fetchMessages = async () => {
@@ -60,30 +63,30 @@ const FlatDetails = () => {
       // console.log('Fetching messages for flat:', id);
       // console.log('Current user ID:', userId);
       // console.log('Flat ownerId:', flat?.ownerId?._id);
-      
+
       const flatOwnerId = flat?.ownerId?._id || flat?.ownerId;
       // console.log('Is owner?', flatOwnerId === userId);
-      
+
       let messagesUrl;
       if (flat && flatOwnerId === userId) {
         // User is owner - get all messages
-        messagesUrl = `http://localhost:3000/flats/${id}/messages/`;
+        messagesUrl = `https://quickrentals-backend.onrender.com/flats/${id}/messages/`;
       } else {
         // User is guest - get only their messages
-        messagesUrl = `http://localhost:3000/flats/${id}/messages/${userId}`;
+        messagesUrl = `https://quickrentals-backend.onrender.com/flats/${id}/messages/${userId}`;
       }
 
       const response = await fetch(messagesUrl, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
         const data = await response.json();
         const messagesData = data.data || data;
-        
+
         if (Array.isArray(messagesData)) {
           // Sort messages by date (newest first)
           messagesData.sort((a, b) => {
@@ -98,11 +101,11 @@ const FlatDetails = () => {
       } else if (response.status === 404) {
         setMessages([]);
       } else {
-        console.error('Failed to fetch messages');
+        console.error("Failed to fetch messages");
         setMessages([]);
       }
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      console.error("Error fetching messages:", error);
       setMessages([]);
     }
   };
@@ -120,16 +123,19 @@ const FlatDetails = () => {
     if (!messageContent.trim()) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/flats/${id}/messages`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          content: messageContent.trim()
-        })
-      });
+      const response = await fetch(
+        `https://quickrentals-backend.onrender.com/flats/${id}/messages`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: messageContent.trim(),
+          }),
+        }
+      );
 
       if (response.ok) {
         toast.success("Message sent successfully");
@@ -140,47 +146,46 @@ const FlatDetails = () => {
         toast.error(errorData.message || "Failed to send message");
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
       toast.error("Failed to send message");
     }
   };
 
   const formatDateTime = (dateString) => {
     try {
-      if (!dateString) return 'Just now';
-      
-      const timestamp = typeof dateString === 'string' ? parseInt(dateString) : dateString;
+      if (!dateString) return "Just now";
+
+      const timestamp =
+        typeof dateString === "string" ? parseInt(dateString) : dateString;
       const date = new Date(timestamp);
-      
+
       if (isNaN(date.getTime())) {
-        return 'Invalid date';
+        return "Invalid date";
       }
-      
-      return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+
+      return date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
     } catch (error) {
-      console.error('Error formatting date:', error);
-      return 'Date error';
+      console.error("Error formatting date:", error);
+      return "Date error";
     }
   };
 
   // Image navigation functions
   const nextImage = () => {
     if (flat && flat.flatImages) {
-      setCurrentImageIndex((prev) => 
-        (prev + 1) % flat.flatImages.length
-      );
+      setCurrentImageIndex((prev) => (prev + 1) % flat.flatImages.length);
     }
   };
 
   const prevImage = () => {
     if (flat && flat.flatImages) {
-      setCurrentImageIndex((prev) => 
+      setCurrentImageIndex((prev) =>
         prev === 0 ? flat.flatImages.length - 1 : prev - 1
       );
     }
@@ -190,9 +195,7 @@ const FlatDetails = () => {
     return (
       <div className={styles.loaderContainer}>
         <div className={styles.loader}></div>
-        <div className={styles.loadingText}>
-          Loading apartment details...
-        </div>
+        <div className={styles.loadingText}>Loading apartment details...</div>
       </div>
     );
   }
@@ -202,37 +205,34 @@ const FlatDetails = () => {
 
   return (
     <div className={styles.container}>
-      <Toaster 
+      <Toaster
         position="top-center"
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#363636',
-            color: '#fff',
+            background: "#363636",
+            color: "#fff",
           },
           success: {
             duration: 3000,
             style: {
-              background: '#10b981',
-              color: 'white',
+              background: "#10b981",
+              color: "white",
             },
           },
           error: {
             duration: 4000,
             style: {
-              background: '#ef4444',
-              color: 'white',
+              background: "#ef4444",
+              color: "white",
             },
           },
         }}
       />
-      
+
       {/* Header */}
       <div className={styles.header}>
-        <button 
-          className={styles.backButton}
-          onClick={() => navigate('/home')}
-        >
+        <button className={styles.backButton} onClick={() => navigate("/home")}>
           ← Back to Search
         </button>
         <h1 className={styles.title}>Apartment Details</h1>
@@ -253,22 +253,27 @@ const FlatDetails = () => {
                 </button>
               </>
             )}
-            
+
             <img
-              src={`http://localhost:3000${flat.flatImages?.[currentImageIndex] || '/uploads/default.jpg'}`}
+              src={`https://quickrentals-backend.onrender.com${
+                flat.flatImages?.[currentImageIndex] || "/uploads/default.jpg"
+              }`}
               alt={`${flat.city} apartment`}
               className={styles.mainImage}
               onError={(e) => {
-                e.target.src = 'http://localhost:3000/uploads/default.jpg';
+                e.target.src =
+                  "https://quickrentals-backend.onrender.com/uploads/default.jpg";
               }}
             />
-            
+
             {flat.flatImages && flat.flatImages.length > 1 && (
               <div className={styles.imageDots}>
                 {flat.flatImages.map((_, index) => (
                   <span
                     key={index}
-                    className={`${styles.dot} ${index === currentImageIndex ? styles.activeDot : ''}`}
+                    className={`${styles.dot} ${
+                      index === currentImageIndex ? styles.activeDot : ""
+                    }`}
                     onClick={() => setCurrentImageIndex(index)}
                   />
                 ))}
@@ -277,9 +282,7 @@ const FlatDetails = () => {
 
             {/* Badges */}
             <div className={styles.badges}>
-              {flat.hasAc && (
-                <span className={styles.badge}>❄️ AC</span>
-              )}
+              {flat.hasAc && <span className={styles.badge}>❄️ AC</span>}
             </div>
           </div>
         </div>
@@ -320,10 +323,9 @@ const FlatDetails = () => {
               <div className={styles.detailItem}>
                 <strong>Owner:</strong>
                 <span>
-                  {flat.ownerId?.firstName && flat.ownerId?.lastName 
+                  {flat.ownerId?.firstName && flat.ownerId?.lastName
                     ? `${flat.ownerId.firstName} ${flat.ownerId.lastName}`
-                    : 'Property Owner'
-                  }
+                    : "Property Owner"}
                 </span>
               </div>
               {!isOwner && flat.ownerId?.email && (
@@ -339,7 +341,7 @@ const FlatDetails = () => {
           <div className={styles.actionSection}>
             {isOwner ? (
               <div className={styles.ownerActions}>
-                <button 
+                <button
                   className={styles.editButton}
                   onClick={() => navigate(`/edit-flat/${flat._id}`)}
                 >
@@ -351,7 +353,10 @@ const FlatDetails = () => {
               </div>
             ) : (
               <div className={styles.guestActions}>
-                <form className={styles.messageForm} onSubmit={handleSendMessage}>
+                <form
+                  className={styles.messageForm}
+                  onSubmit={handleSendMessage}
+                >
                   <h3>Send a message to the owner</h3>
                   <textarea
                     className={styles.textarea}
@@ -377,12 +382,16 @@ const FlatDetails = () => {
       {/* Messages Section */}
       <div className={styles.messagesSection}>
         <h2 className={styles.messagesTitle}>
-          {isOwner ? `All Messages (${messages.length})` : `Your Messages (${messages.length})`}
+          {isOwner
+            ? `All Messages (${messages.length})`
+            : `Your Messages (${messages.length})`}
         </h2>
-        
+
         {messages.length === 0 ? (
           <div className={styles.noMessages}>
-            {isOwner ? "No messages yet." : "You haven't sent any messages yet."}
+            {isOwner
+              ? "No messages yet."
+              : "You haven't sent any messages yet."}
           </div>
         ) : (
           <div className={styles.messagesContainer}>
@@ -392,13 +401,12 @@ const FlatDetails = () => {
                   <div className={styles.messageHeader}>
                     <div className={styles.messageAuthor}>
                       <strong>
-                        {isOwner 
-                          ? (message.userId?.firstName && message.userId?.lastName
-                              ? `${message.userId.firstName} ${message.userId.lastName}`
-                              : 'Guest User'
-                            )
-                          : 'You'
-                        }
+                        {isOwner
+                          ? message.userId?.firstName &&
+                            message.userId?.lastName
+                            ? `${message.userId.firstName} ${message.userId.lastName}`
+                            : "Guest User"
+                          : "You"}
                       </strong>
                       {isOwner && message.userId?.email && (
                         <span className={styles.messageEmail}>
@@ -407,12 +415,12 @@ const FlatDetails = () => {
                       )}
                     </div>
                     <div className={styles.messageDate}>
-                      {message.createdAt ? formatDateTime(message.createdAt) : 'Just now'}
+                      {message.createdAt
+                        ? formatDateTime(message.createdAt)
+                        : "Just now"}
                     </div>
                   </div>
-                  <div className={styles.messageContent}>
-                    {message.content}
-                  </div>
+                  <div className={styles.messageContent}>{message.content}</div>
                 </div>
               ))}
             </div>

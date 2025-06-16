@@ -25,14 +25,17 @@ export const actionEditProfile = async ({ request, params }) => {
         email: formData.get("email"),
       };
 
-      const response = await fetch(`http://localhost:3000/users/${id}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updateData),
-      });
+      const response = await fetch(
+        `https://quickrentals-backend.onrender.com/users/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateData),
+        }
+      );
 
       const data = await response.json();
 
@@ -77,7 +80,7 @@ export const actionEditProfile = async ({ request, params }) => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/users/updatePassword`,
+        `https://quickrentals-backend.onrender.com/users/updatePassword`,
         {
           method: "PATCH",
           headers: {
@@ -219,12 +222,15 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `https://quickrentals-backend.onrender.com/users/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -240,7 +246,6 @@ const EditProfile = () => {
               : "",
           });
         } else {
-          
           // console.error("Failed to fetch user data. Status:", response.status);
 
           // Check explicit pentru 404
@@ -508,7 +513,9 @@ const EditProfile = () => {
       {!isAdminEditingOtherUser && (
         <ReusableModal
           isOpen={showLogoutModal}
-          onClose={logoutReason === "email" ? null : () => setShowLogoutModal(false)}
+          onClose={
+            logoutReason === "email" ? null : () => setShowLogoutModal(false)
+          }
           onConfirm={handleLogout}
           title={
             logoutReason === "email" ? "Email Updated" : "Password Changed"

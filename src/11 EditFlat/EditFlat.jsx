@@ -38,12 +38,15 @@ const EditFlat = () => {
 
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:3000/flats/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `https://quickrentals-backend.onrender.com/flats/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -149,13 +152,16 @@ const EditFlat = () => {
       });
 
       // Trimite la backend
-      const response = await fetch(`http://localhost:3000/flats/${id}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: submitFormData,
-      });
+      const response = await fetch(
+        `https://quickrentals-backend.onrender.com/flats/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: submitFormData,
+        }
+      );
 
       if (response.ok) {
         toast.success("Apartment updated successfully!");
@@ -185,15 +191,15 @@ const EditFlat = () => {
 
   // Gestionare upload imagini noi
   const handleFileChange = (e) => {
-  const files = Array.from(e.target.files);
-  
-  // facem replace la imagini, validam doar imaginile noi
-  if (files.length > 3) {
-    toast.error("Maximum 3 images allowed");
-    return;
-  }
-  setSelectedFiles(files);
-};
+    const files = Array.from(e.target.files);
+
+    // facem replace la imagini, validam doar imaginile noi
+    if (files.length > 3) {
+      toast.error("Maximum 3 images allowed");
+      return;
+    }
+    setSelectedFiles(files);
+  };
 
   // Stergere fisier specific
   const removeFile = (indexToRemove) => {
@@ -279,26 +285,26 @@ const EditFlat = () => {
   return (
     <div className={styles.container}>
       <div>
-        <Toaster 
+        <Toaster
           position="top-center"
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#363636',
-              color: '#fff',
+              background: "#363636",
+              color: "#fff",
             },
             success: {
               duration: 3000,
               style: {
-                background: '#10b981',
-                color: 'white',
+                background: "#10b981",
+                color: "white",
               },
             },
             error: {
               duration: 4000,
               style: {
-                background: '#ef4444',
-                color: 'white',
+                background: "#ef4444",
+                color: "white",
               },
             },
           }}
@@ -341,12 +347,12 @@ const EditFlat = () => {
                   .map((imagePath, index) => (
                     <div key={index} className={styles.existingImage}>
                       <img
-                        src={`http://localhost:3000${imagePath}`}
+                        src={`https://quickrentals-backend.onrender.com${imagePath}`}
                         alt={`Apartment ${index + 1}`}
                         className={styles.imagePreview}
                         onError={(e) => {
                           e.target.src =
-                            "http://localhost:3000/uploads/default.jpg";
+                            "https://quickrentals-backend.onrender.com/uploads/default.jpg";
                         }}
                       />
                     </div>

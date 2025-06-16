@@ -5,7 +5,8 @@ import toast from "react-hot-toast";
 import ReusableModal from "../Utils/ReusableModal";
 
 const DeleteAccount = ({ isOpen, onClose }) => {
-  const { setLoggedIn, setUserId, setToken, userId, token } = useContext(AuthContext);
+  const { setLoggedIn, setUserId, setToken, userId, token } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
 
@@ -18,44 +19,43 @@ const DeleteAccount = ({ isOpen, onClose }) => {
     setDeleting(true);
 
     try {
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `https://quickrentals-backend.onrender.com/users/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (response.ok) {
-        
-        
         // Inchide modalul
         onClose();
-        
+
         // Afiseaza mesaj de success
         toast.success("Account deleted successfully. Sorry to see you go!");
-        
+
         // Redirectionare catre register dupa o mica intarziere
-        
-          navigate("/register");
-        
+
+        navigate("/register");
 
         setTimeout(() => {
-        // Reseteaza toate state-urile din AuthContext
-        setLoggedIn(null);
-        setUserId(null);
-        setToken(null);
-        
-        // Elimina datele din localStorage
-        localStorage.removeItem("userId");
-        localStorage.removeItem("token");
-        localStorage.removeItem("loginTime");
+          // Reseteaza toate state-urile din AuthContext
+          setLoggedIn(null);
+          setUserId(null);
+          setToken(null);
+
+          // Elimina datele din localStorage
+          localStorage.removeItem("userId");
+          localStorage.removeItem("token");
+          localStorage.removeItem("loginTime");
         }, 100);
-        
       } else {
         const errorData = await response.json();
-        console.error('Delete account error:', errorData);
-        
+        console.error("Delete account error:", errorData);
+
         if (response.status === 401) {
           toast.error("Session expired. Please login again.");
           // Logout automat daca token invalid
@@ -91,12 +91,14 @@ const DeleteAccount = ({ isOpen, onClose }) => {
           Are you sure you want to delete your account permanently?
           <br />
           <strong>This will also delete:</strong>
-          <ul style={{ 
-            textAlign: 'left', 
-            margin: '1rem 0', 
-            paddingLeft: '1.5rem',
-            color: '#374151'
-          }}>
+          <ul
+            style={{
+              textAlign: "left",
+              margin: "1rem 0",
+              paddingLeft: "1.5rem",
+              color: "#374151",
+            }}
+          >
             <li>All your posted apartments</li>
             <li>All your messages</li>
             <li>Your apartments from other users' favorites</li>
